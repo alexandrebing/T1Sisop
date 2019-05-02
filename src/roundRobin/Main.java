@@ -37,7 +37,8 @@ public class Main {
         System.out.println(line);
         int cpuTime = Integer.parseInt(line);
         
-        while((line = in.readLine())!= null) {
+        for (int i = 0; i < procNumber; i++) {
+        	line = in.readLine();
         	System.out.println(line);
         	String data [] = line.split(" ");
         	String processId = Integer.toString(processNumber);
@@ -45,8 +46,8 @@ public class Main {
         	int start = Integer.parseInt(data[0]);
         	int duration = Integer.parseInt(data[1]);
         	ArrayList<Integer> ioList = new ArrayList();
-        	for(int i = 2; i < data.length; i++ ) {
-        		ioList.add(Integer.parseInt(data[i]));
+        	for(int j = 2; j < data.length; j++ ) {
+        		ioList.add(Integer.parseInt(data[j]));
         	}
         	
         	Process p = new Process(processId, start, duration, ioList);
