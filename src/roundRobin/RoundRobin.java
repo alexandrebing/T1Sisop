@@ -88,14 +88,11 @@ public class RoundRobin {
 	private ArrayList<Process> addToQueue(int atTime) {
 		
 		//PROBLEMA AQUI AO ORDENAR A FILA CONFORME A PRIORIDADE, ACHO.
-		System.out.println(processList);
-		System.out.println("Then:");
 		Comparator<Process> compareByStart = (Process p1, Process p2) -> Integer.compare(p1.getStart(), p2.getStart());
 		Collections.sort(processList, compareByStart);
-		System.out.println(processList);
 		ArrayList <Process> queue = this.requestQueue;
 		for(Process p: processList) {
-			if(p.getStart() <= atTime && !p.isScheduled() && p.isFinished()) {
+			if(p.getStart() <= atTime && !p.isScheduled() && !p.isFinished()) {
 				p.isScheduled();
 				queue.add(p);		
 			}
