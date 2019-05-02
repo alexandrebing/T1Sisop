@@ -93,19 +93,28 @@ public class RoundRobin {
 		ArrayList <Process> queue = requestQueue;
 		for(Process p: processList) {
 			if(p.getStart() <= atTime && !p.isScheduled() && !p.isFinished()) {
-				p.isScheduled();
+				p.setScheduled();
 				queue.add(p);		
 			}
 		}
+		//printArrayList(queue);
 		return queue;
 		
 	}
+	
+//	private void printArrayList(ArrayList<Process> processes) {
+//		String ans = "Processos: ";
+//		for (Process p : processes) {
+//			ans += p.getProcessID() + " |";
+//		}
+//		System.out.println(ans);
+//		
+//		
+//	}
 
 	private void mountResponse(String res) {
 		
 		response += res;
-		
-		System.out.println(response);
 	
 	}
 	

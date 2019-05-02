@@ -1,34 +1,62 @@
 package roundRobin;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String args[]) {
-		System.out.println("Hello World");
-		
-		ArrayList<Integer> p1IO = new ArrayList<Integer>();
-		p1IO.add(2);
-		ArrayList<Integer> p2IO = new ArrayList<Integer>();
-		ArrayList<Integer> p3IO = new ArrayList<Integer>();
-		p3IO.add(1);
-		p3IO.add(2);
-		
-		System.out.println(p2IO.isEmpty());
-		
-		//ID, START, EXECUTION TIME, IO LIST
-		Process p1 = new Process("1", 3, 6, p1IO);
-		
-		Process p2 = new Process("2", 5, 8, p2IO);
-		
-		Process p3 = new Process("3", 9, 7, p3IO);
+	public static void main(String args[]) throws FileNotFoundException, IOException {
+
+		int processNumber = 1;
 		
 		ArrayList<Process> processList = new ArrayList<Process>();
-		processList.add(p1);
-		processList.add(p2);
-		processList.add(p3);
 		
-		RoundRobin rr = new RoundRobin(4, processList);
+		
+		//READING FROM FILE
+		Scanner s = new Scanner(System.in);
+    	System.out.println("Digite o nome do arquivo de entrada (sem extensão .txt)");
+    	String enter = s.nextLine();
+    	System.out.println();
+    	System.out.println("====================================================================================");
+    	File file = new File("src/"+ enter + ".txt");
+    	BufferedReader in = new BufferedReader(new FileReader(file));
+        int procCount = 0;
+        
+        System.out.println("Entrada lida:");
+        String line = in.readLine();
+        int procNumber = Integer.parseInt(line);
+        System.out.println(line);
+        if(procNumber <= 0) System.exit(0);
+        
+        line = in.readLine();
+        System.out.println(line);
+        int cpuTime = Integer.parseInt(line);
+        
+        while((line = in.readLine())!= null) {
+        	System.out.println(line);
+        	String data [] = line.split(" ");
+        	String processId = Integer.toString(processNumber);
+        	processNumber += 1;
+        	int start = Integer.parseInt(data[0]);
+        	int duration = Integer.parseInt(data[1]);
+        	ArrayList<Integer> ioList = new ArrayList();
+        	for(int i = 2; i < data.length; i++ ) {
+        		ioList.add(Integer.parseInt(data[i]));
+        	}
+        	
+        	Process p = new Process(processId, start, duration, ioList);
+        	
+        	processList.add(p);
+        }
+        
+        System.out.println();
+		
+		RoundRobin rr = new RoundRobin(cpuTime, processList);
 		
 		rr.runRoundRobin(1);
 	}

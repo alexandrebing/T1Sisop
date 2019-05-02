@@ -71,13 +71,12 @@ public class Process {
 	}
 	
 	private boolean hasIO() {
-		System.out.println(ioEntries.isEmpty());
 		return !ioEntries.isEmpty();
 	}
 	
 	public boolean willBeInterrupted() {
 		
-		if (hasIO()) {
+		if (!hasIO()) {
 			return false;
 		}
 		
