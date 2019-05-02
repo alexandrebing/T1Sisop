@@ -28,39 +28,39 @@ public class Process {
 	}
 	
 	public boolean isFinished() {
-		return this.finished;
+		return finished;
 	}
 	
 	public String getProcessID() {
-		return this.processId;
+		return processId;
 	}
 	
 	public void setUnscheduled() {
-		this.scheduled = false;
+		scheduled = false;
 	}
 	
 	public void setScheduled() {
-		this.scheduled = true;
+		scheduled = true;
 	}
 	
 	public void setFinished() {
-		this.finished = true;
+		finished = true;
 	}
 	
 	public int getStart() {
-		return this.startTime;
+		return startTime;
 	}
 	
-	public String execute(int startTime) {
-		this.startTime = startTime;
-		this.timeLeft -= 1;
+	public String execute(int startingAt) {
+		startTime = startingAt;
+		timeLeft -= 1;
 		
 		if (timeLeft == 0) {
 			return "finished";
 		}
 		if (hasIO()) {
-			this.nextIO -= 1;
-			if (this.nextIO == 0) {
+			nextIO -= 1;
+			if (nextIO == 0) {
 				changeIOContext();
 				startTime += ioTime;
 				return "ioInterrupt";
@@ -71,8 +71,8 @@ public class Process {
 	}
 	
 	private boolean hasIO() {
-		System.out.println(this.ioEntries.isEmpty());
-		return !this.ioEntries.isEmpty();
+		System.out.println(ioEntries.isEmpty());
+		return !ioEntries.isEmpty();
 	}
 	
 	public boolean willBeInterrupted() {
@@ -85,22 +85,22 @@ public class Process {
 	}
 	
 	private void changeIOContext() {
-		int operations = this.ioEntries.size();
+		int operations = ioEntries.size();
 		
 		if (operations>1) {
-			if (this.currentOp < operations -1) {
-				this.currentOp += 1;
+			if (currentOp < operations -1) {
+				currentOp += 1;
 			} else {
-				this.currentOp = 0;
+				currentOp = 0;
 			}
 		} else {
-			this.currentOp = 0;
+			currentOp = 0;
 		}
-		this.nextIO = this.ioEntries.get(this.currentOp);
+		nextIO = ioEntries.get(currentOp);
 	}
 
 	public boolean isScheduled() {
-		return this.scheduled;
+		return scheduled;
 	}
 	
 	public int compareTo(Process p0) {
